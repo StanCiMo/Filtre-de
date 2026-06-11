@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  background: #cfda98;
+  font-family: Arial;
+  overflow: hidden;
+}
+
+/* HUD */
+#hud {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px;
+}
+
+.stat {
+  width: 60px;
+  margin: 0% 0.61rem; 
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.indicator {
+position: relative;
+  top: 0px;
+  margin-bottom: 6px;
+  width: 13px;
+  height: 13px;
+  background: #fffffff5;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+.icon-fill {
+  width: 80px;
+  height: 80px;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  background: #ffffff61;
+  position: relative;
+}
+.icon-fill.curiosity {
+  mask-image: url("/assets/icons/faq.svg");
+}
+.icon-fill.truth {
+  mask-image: url("/assets/icons/education.svg");
+}
+.icon-fill.expertise {
+  mask-image: url("/assets/icons/graduation.svg");
+}
+.icon-fill.speed {
+  mask-image: url("/assets/icons/rocket.svg");
+}
+.icon-fill.viral {
+  mask-image: url("/assets/icons/virus.svg");
+}
+.icon-fill.influence {
+  mask-image: url("/assets/icons/influence.svg");
+}
+.liquid {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: var(--fill);
+  background: #4c4e4c;
+  transition: height 0.3s ease;
+}
+.fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  background: white;
+  transition: 0.2s;
+}
+
+/* CARD */
+#cardContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+#card {
+  width: 520px;
+height: 66vh;
+  background: white;
+  border-radius: 12px;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  overflow: hidden;
+  transition: transform 0.1s;
+}
+
+#cardTop {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#cardImage {
+  height: 350px;
+  background: #ddd;
+}
+
+#cardSource {
+  padding: 10px;
+  font-size: 12px;
+  color: gray;
+}
+
+/* swipe feedback */
+#cardPreviewLeft,
+#cardPreviewRight {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+}
+
+#cardPreviewLeft {
+  left: 0;
+  background: rgba(255,0,0,0.2);
+}
+
+#cardPreviewRight {
+  right: 0;
+  background: rgba(0,255,0,0.2);
+}
