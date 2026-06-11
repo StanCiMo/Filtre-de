@@ -2,88 +2,93 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Infopolis</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Infopolis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <script type="module" src="/js/cards.js"></script>
-    <script type="module" src="/js/engine.js"></script>
 
-    <div id="game">
+  <div id="game">
 
-        <!-- HUD ICON STATS -->
-        <div id="hud">
+    <!-- ── HUD : jauges de stats ───────────────────────────────────────── -->
+    <div id="hud">
 
-            <div class="stat" id="curiosityStat">
-                <div class="indicator"></div>
-                <div class="icon-fill curiosity" >
-                    <div class="liquid" id="curiosityBar"></div>
-                </div>
-
-            </div>
-
-            <div class="stat" id="truthStat">
-                <div class="indicator"></div>
-                <div class="icon-fill truth" >
-                    <div class="liquid" id="truthBar"></div>
-                </div>
-            </div>
-
-            <div class="stat" id="expertiseStat">
-                <div class="indicator"></div>
-                <div class="icon-fill expertise" >
-
-                    <div class="liquid" id="expertiseBar"></div>
-
-                </div>
-            </div>
-
-            <div class="stat" id="speedStat">
-                <div class="indicator"></div>
-                <div class="icon-fill speed" >
-                    <div class="liquid" id="speedBar"></div>
-                </div>
-            </div>
-
-            <div class="stat" id="viralStat">
-                <div class="indicator"></div>
-                <div class="icon-fill viral" >
-                    <div class="liquid" id="viralBar"></div>
-                </div>
-            </div>
-
-            <div class="stat" id="influenceStat">
-                <div class="indicator"></div>
-                <div class="icon-fill influence">
-                    <div class="liquid" id="influenceBar"></div>
-                </div>
-            </div>
+      <div class="stat" id="curiosityStat">
+        <div class="indicator"></div>
+        <div class="icon-fill curiosity">
+          <div class="liquid" id="curiosityBar"></div>
         </div>
+        <h5 class="statLabel">Curiosité</h5>
+      </div>
 
-        <!-- CARD -->
-        <div id="cardContainer">
-
-            <div id="card">
-
-                <div id="cardTop"></div>
-
-                <div id="cardImage"></div>
-
-                <div id="cardSource"></div>
-
-                <div id="cardPreviewLeft"></div>
-                <div id="cardPreviewRight"></div>
-
-            </div>
-
+      <div class="stat" id="truthStat">
+        <div class="indicator"></div>
+        <div class="icon-fill truth">
+          <div class="liquid" id="truthBar"></div>
         </div>
+        <h5 class="statLabel">Vérité</h5>
+      </div>
+
+      <div class="stat" id="expertiseStat">
+        <div class="indicator"></div>
+        <div class="icon-fill expertise">
+          <div class="liquid" id="expertiseBar"></div>
+        </div>
+        <h5 class="statLabel">Expertise</h5>
+      </div>
+
+      <div class="stat" id="speedStat">
+        <div class="indicator"></div>
+        <div class="icon-fill speed">
+          <div class="liquid" id="speedBar"></div>
+        </div>
+        <h5 class="statLabel">Vitesse</h5>
+      </div>
+
+      <div class="stat" id="viralStat">
+        <div class="indicator"></div>
+        <div class="icon-fill viral">
+          <div class="liquid" id="viralBar"></div>
+        </div>
+        <h5 class="statLabel">Viralité</h5>
+      </div>
+
+      <div class="stat" id="influenceStat">
+        <div class="indicator"></div>
+        <div class="icon-fill influence">
+          <div class="liquid" id="influenceBar"></div>
+        </div>
+        <h5 class="statLabel">Influence</h5>
+      </div>
 
     </div>
 
-    <script type="module" src="/js/game.js"></script>
+    <!-- ── Carte ──────────────────────────────────────────────────────── -->
+    <div id="cardContainer">
+      <div id="card">
+
+        <div id="cardTitle"></div>
+        <div id="cardTop"></div>
+        <div id="cardTags"></div>
+        <div id="cardImage"></div>
+        <div id="cardSource"></div>
+
+        <div id="cardPreviewLeft"></div>
+        <div id="cardPreviewRight"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Un seul point d'entrée — game.js importe engine.js lui-même -->
+  <script type="module" src="/js/game.js"></script>
+
 </body>
 
 </html>
