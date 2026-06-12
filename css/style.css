@@ -1,268 +1,582 @@
-body {
+/* ═══════════════════════════════════════════════════════════════════════════
+   Infopolis — style.css
+   Architecture : Scene → PhoneFrame → PhoneScreen → Game → HUD + Card
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Reset & base ──────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
-  background: #cfda98;
-  font-family: Arial;
-  overflow: hidden;
+  padding: 0;
 }
 
-/* HUD */
+:root {
+  --screen-bg:      #0e0e0e;
+  --surface-1:      #1a1a1a;
+  --surface-2:      #242424;
+  --border-dim:     rgba(255,255,255,0.08);
+  --border-bright:  rgba(255,255,255,0.16);
+  --text-primary:   #f0f0f0;
+  --text-secondary: #888;
+  --text-muted:     #555;
+  --accent-green:   #4ade80;
+  --accent-red:     #f43f5e;
+  --phone-w:        375px;
+  --phone-h:        812px;
+  --bezel:          12px;
+  --screen-radius:  44px;
+  --frame-radius:   54px;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background: #1c1917;
+}
+
+/* ── Scène : fond ambiant ───────────────────────────────────────────────────── */
+
+#scene {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Papier journal froissé — rappelle le thème médias */
+  background-color: #1c1917;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(234,179,8,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 70% 60%, rgba(239,68,68,0.05) 0%, transparent 70%);
+}
+
+/* ── Cadre téléphone ────────────────────────────────────────────────────────── */
+
+#phoneFrame {
+  width: calc(var(--phone-w) + var(--bezel) * 2);
+  height: calc(var(--phone-h) + var(--bezel) * 2);
+  background: linear-gradient(160deg, #2a2a2a 0%, #111 50%, #1e1e1e 100%);
+  border-radius: var(--frame-radius);
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 0 2px rgba(0,0,0,0.8),
+    0 40px 80px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Encoche haut */
+#phoneSpeaker {
+  position: absolute;
+  top: calc(var(--bezel) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 6px;
+  background: #0a0a0a;
+  border-radius: 3px;
+  z-index: 10;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Caméra frontale */
+#phoneCamera {
+  position: absolute;
+  top: calc(var(--bezel) + 6px);
+  left: calc(50% + 54px);
+  width: 10px;
+  height: 10px;
+  background: #0d0d0d;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: inset 0 0 0 2px rgba(50,100,180,0.3);
+}
+
+/* ── Écran ──────────────────────────────────────────────────────────────────── */
+
+#phoneScreen {
+  position: absolute;
+  inset: var(--bezel);
+  background: var(--screen-bg);
+  border-radius: var(--screen-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Barre de statut OS ─────────────────────────────────────────────────────── */
+
+#statusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px 6px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  /* Espace pour l'encoche */
+  padding-top: 18px;
+}
+
+#statusIcons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--text-primary);
+}
+
+.status-icon {
+  letter-spacing: -1px;
+}
+
+/* ── Conteneur de jeu ───────────────────────────────────────────────────────── */
+
+#game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── HUD ────────────────────────────────────────────────────────────────────── */
+
 #hud {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  padding: 10px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 6px 16px 8px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
+  gap: 4px;
 }
 
 .stat {
-  width: 60px;
-  margin: 0% 0.61rem; 
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.statLabel {
-margin-top: 6px;
-  font-size: 19px;
-  color: #333333d9;
-  font-family: "Jersey 20", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-.indicator {
-position: relative;
-  top: 0px;
-  margin-bottom: 6px;
-  width: 13px;
-  height: 13px;
-  background: #fffffff5;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
 }
 
+.statLabel {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: 'Jersey 20', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+/* Indicateur de preview */
+.indicator {
+  width: 5px;
+  height: 5px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+/* Icône jauge */
 .icon-fill {
-  width: 80px;
-  height: 80px;
+  width: 32px;
+  height: 32px;
   mask-size: contain;
   mask-repeat: no-repeat;
-  background: #ffffff61;
+  mask-position: center;
+  background: var(--surface-2);
   position: relative;
+  border-radius: 6px;
 }
-.icon-fill.curiosity {
-  mask-image: url("/assets/icons/faq.svg");
-}
-.icon-fill.truth {
-  mask-image: url("/assets/icons/education.svg");
-}
-.icon-fill.expertise {
-  mask-image: url("/assets/icons/graduation.svg");
-}
-.icon-fill.speed {
-  mask-image: url("/assets/icons/rocket.svg");
-}
-.icon-fill.viral {
-  mask-image: url("/assets/icons/virus.svg");
-}
-.icon-fill.influence {
-  mask-image: url("/assets/icons/influence.svg");
-}
+
+.icon-fill.curiosity  { mask-image: url("/assets/icons/faq.svg"); }
+.icon-fill.truth      { mask-image: url("/assets/icons/education.svg"); }
+.icon-fill.expertise  { mask-image: url("/assets/icons/graduation.svg"); }
+.icon-fill.speed      { mask-image: url("/assets/icons/rocket.svg"); }
+.icon-fill.viral      { mask-image: url("/assets/icons/virus.svg"); }
+.icon-fill.influence  { mask-image: url("/assets/icons/influence.svg"); }
+
+/* Liquide dans l'icône */
 .liquid {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
-  height: var(--fill);
-  background: #4c4e4c;
-  transition: height 0.3s ease;
-}
-.fill {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50%;
-  background: white;
-  transition: 0.2s;
+  height: var(--fill, 50%);
+  background: #e8e8e8;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 0 6px 6px;
 }
 
-/* CARD */
-#cardContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
+/* Couleurs des liquides par stat */
+#curiosityBar  { background: #60a5fa; }
+#truthBar      { background: #4ade80; }
+#expertiseBar  { background: #a78bfa; }
+#speedBar      { background: #fb923c; }
+#viralBar      { background: #f43f5e; }
+#influenceBar  { background: #facc15; }
+
+/* Alerte quand une jauge est critique (< 20% ou > 80%) — géré via JS */
+.stat.critical .liquid {
+  background: #ef4444 !important;
 }
+.stat.critical .statLabel {
+  color: #ef4444;
+}
+
+/* ── Badge d'acte ───────────────────────────────────────────────────────────── */
+
+#actBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
+}
+
+#actLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#actName {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: 'Jersey 20', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* ── Zone carte ─────────────────────────────────────────────────────────────── */
+
+#cardContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px 8px;
+  min-height: 0;
+}
+
+/* Hints de swipe */
+#swipeHints {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+#hintLeft, #hintRight {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  transition: opacity 0.2s;
+}
+
+#hintLeft  { color: var(--accent-red);   border: 1px solid rgba(244,63,94,0.3);  background: rgba(244,63,94,0.08);  opacity: 0.5; }
+#hintRight { color: var(--accent-green); border: 1px solid rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); opacity: 0.5; }
+
+/* Activation des hints au survol de swipe — via JS sur #card */
+#card.swiping-left  #hintLeft,
+body.swiping-left   #hintLeft  { opacity: 1; }
+#card.swiping-right #hintRight,
+body.swiping-right  #hintRight { opacity: 1; }
+
+/* ── Carte ──────────────────────────────────────────────────────────────────── */
 
 #card {
-  width: 520px;
-height: 66vh;
-  background: white;
-  border-radius: 12px;
+  width: 100%;
+  max-height: 100%;
+  background: #1e1e1e;
+  border-radius: 20px;
+  border: 1px solid var(--border-dim);
   position: relative;
   cursor: grab;
   user-select: none;
   overflow: hidden;
-  transition: transform 0.1s;
+  transition: transform 0.08s ease;
+  display: flex;
+  flex-direction: column;
+  /* Ombre portée légère pour la profondeur */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(255,255,255,0.06);
 }
 
-#cardTop {
-  padding: 20px;
-  font-size: 18px;
-  font-weight: bold;
+#card:active {
+  cursor: grabbing;
 }
 
-#cardImage {
-  height: 350px;
-  background: #ddd;
-}
-
-#cardSource {
-  padding: 10px;
-  font-size: 12px;
-  color: gray;
-}
-
-/* swipe feedback */
-#cardPreviewLeft,
-#cardPreviewRight {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  opacity: 0;
-}
-
-#cardPreviewLeft {
-  left: 0;
-  background: rgba(255,0,0,0.2);
-}
-
-#cardPreviewRight {
-  right: 0;
-  background: rgba(0,255,0,0.2);
-}
-/* ── Ajouts à style.css ─────────────────────────────────────────────────────
-   À fusionner avec le style.css existant ou importer après lui.
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* Titre de la carte (champ `title`) */
+/* Titre de la carte */
 #cardTitle {
-  padding: 16px 20px 4px;
-  font-size: 13px;
-  font-weight: bold;
+  padding: 14px 16px 4px;
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #888;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
 }
 
-/* Texte principal de la carte */
+/* Texte principal */
 #cardTop {
-  padding: 8px 20px 12px;
-  font-size: 17px;
-  font-weight: normal;
-  line-height: 1.45;
-  color: #222;
+  padding: 6px 16px 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-primary);
+  flex: 1;
 }
 
 /* Tags */
 #cardTags {
-  padding: 0 20px 10px;
+  padding: 0 16px 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .card-tag {
-  background: #f0f0f0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-dim);
   border-radius: 999px;
+  font-size: 10px;
+  padding: 2px 8px;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+/* Image optionnelle */
+#cardImage {
+  background: var(--surface-2);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Source */
+#cardSource {
+  padding: 8px 16px 12px;
   font-size: 11px;
-  padding: 3px 10px;
-  color: #555;
-  text-transform: lowercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  border-top: 1px solid var(--border-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* Indicateurs de preview — couleurs déjà injectées via JS */
-.indicator {
-  transition: opacity 0.15s ease, background 0.15s ease;
+#cardSource::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
 }
 
-/* ── Écran de fin ────────────────────────────────────────────────────────── */
+/* ── Feedback de swipe ──────────────────────────────────────────────────────── */
+
+#cardPreviewLeft,
+#cardPreviewRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+#cardPreviewLeft {
+  left: 0;
+  background: linear-gradient(90deg, rgba(244,63,94,0.25) 0%, transparent 100%);
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+#cardPreviewRight {
+  right: 0;
+  background: linear-gradient(270deg, rgba(74,222,128,0.25) 0%, transparent 100%);
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+#cardPreviewLeft span,
+#cardPreviewRight span {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+#cardPreviewLeft span  { color: var(--accent-red);   }
+#cardPreviewRight span { color: var(--accent-green); }
+
+/* ── Barre de navigation simulée ───────────────────────────────────────────── */
+
+#navBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 16px;
+  background: var(--surface-1);
+  border-top: 1px solid var(--border-dim);
+  flex-shrink: 0;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  opacity: 0.35;
+  transition: opacity 0.15s;
+}
+
+.nav-item.active {
+  opacity: 1;
+}
+
+.nav-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.nav-item span {
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+.nav-item.active span {
+  color: var(--text-primary);
+}
+
+/* ── Écran de fin ───────────────────────────────────────────────────────────── */
 
 #endingScreen {
   display: none;
-  position: fixed;
+  position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0,0,0,0.85);
   z-index: 100;
   align-items: center;
   justify-content: center;
-  /* display:flex est géré par jQuery fadeIn — on surcharge via le JS */
+  border-radius: var(--screen-radius);
 }
 
 #endingContent {
-  background: white;
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 480px;
-  width: 90%;
+  background: var(--surface-1);
+  border-radius: 20px;
+  border: 1px solid var(--border-dim);
+  padding: 28px 24px;
+  width: calc(100% - 32px);
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 #endingTitle {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0 0 16px;
-  color: #222;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-family: 'Jersey 20', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 #endingText {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin: 0 0 24px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
   white-space: pre-line;
+  text-align: left;
 }
 
 #endingStats {
   display: flex;
   justify-content: center;
-  gap: 24px;
-  margin-bottom: 28px;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .ending-score {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .ending-score span:first-child {
-  font-size: 11px;
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #aaa;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
 }
 
 .ending-score span:last-child {
-  font-size: 22px;
-  font-weight: bold;
-  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Jersey 20', sans-serif;
 }
 
 #endingRestart {
-  background: #222;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 32px;
-  font-size: 15px;
+  background: rgba(255,255,255,0.08);
+  color: var(--text-primary);
+  border: 1px solid var(--border-bright);
+  border-radius: 12px;
+  padding: 10px 28px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: background 0.2s;
+  letter-spacing: 0.02em;
 }
 
 #endingRestart:hover {
-  background: #444;
+  background: rgba(255,255,255,0.14);
+}
+
+/* ── Horloge dynamique ──────────────────────────────────────────────────────── */
+/* Mise à jour via JS si souhaité */
+
+/* ── Responsive : si l'écran est trop petit pour le téléphone ───────────────── */
+
+@media (max-height: 860px) {
+  :root {
+    --phone-h: 720px;
+    --phone-w: 340px;
+  }
+}
+
+@media (max-height: 760px) {
+  :root {
+    --phone-h: 640px;
+    --phone-w: 310px;
+  }
+  .icon-fill { width: 26px; height: 26px; }
+  #cardTop   { font-size: 13px; }
 }
 /* ========================
    SCREENS — SCROLL BACK
