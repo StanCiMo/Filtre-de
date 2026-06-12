@@ -13,10 +13,98 @@
 
 <body>
 
+  <!-- ══════════════════════════════
+       SCREEN 1 — TITRE
+       ══════════════════════════════ -->
+  <div class="screen active" id="titleScreen">
+    <span class="title-eyebrow">Un jeu sur l'information</span>
+    <div class="title-logo">
+      SCROLL BACK<span class="cursor"></span>
+    </div>
+    <p class="title-tagline">Swipe. Crois. Découvre.</p>
+    <div class="title-start-hint">
+      <button id="btnStart">— Start —</button>
+    </div>
+  </div>
+ 
+  <!-- ══════════════════════════════
+       SCREEN 2 — CINÉMATIQUE
+       ══════════════════════════════ -->
+  <div class="screen" id="cinematicScreen">
+ 
+    <!-- bande supérieure -->
+    <div class="cinematic-band cinematic-band--top">
+      <div class="cinematic-progress">
+        <!-- dots injectés par JS -->
+      </div>
+      <span class="cinematic-scene-label"></span>
+    </div>
+ 
+    <!-- zone image (format 16/9, bandes letterbox) -->
+    <div class="cinematic-viewport">
+ 
+      <!-- Conteneur image scène 1 — à remplir plus tard -->
+      <div class="cinematic-image-slot" id="imageSlot0">
+        <img src=""class="cinematic-image-placeholder">
+     
+      </div>
+ 
+      <!-- Conteneur image scène 2 -->
+      <div class="cinematic-image-slot" id="imageSlot1">
+        <img src=""class="cinematic-image-placeholder">
+        
+      </div>
+ 
+      <!-- Conteneur image scène 3 -->
+      <div class="cinematic-image-slot" id="imageSlot2">
+        <img src=""class="cinematic-image-placeholder">
+        
+      </div>
+ 
+      <!-- Conteneur image scène 4 -->
+      <div class="cinematic-image-slot" id="imageSlot3">
+        <img src=""class="cinematic-image-placeholder">
+    
+      </div>
+ 
+    </div>
+ 
+    <!-- bande inférieure — texte -->
+    <div class="cinematic-band cinematic-band--bottom">
+      <div class="cinematic-text-wrap">
+        <p class="cinematic-text"></p>
+      </div>
+      <button class="cinematic-skip">Passer →</button>
+    </div>
+ 
+  </div>
+ 
+  <!-- ══════════════════════════════
+       SCREEN 3 — SÉLECTION PROFIL
+       ══════════════════════════════ -->
+  <div class="screen" id="profileScreen">
+    <div class="profile-header">
+      <div class="profile-eyebrow">Avant de commencer</div>
+      <div class="profile-title">Qui es-tu en ligne ?</div>
+      <p class="profile-subtitle">Ton profil détermine tes jauges de départ et ta façon de naviguer dans l'info.</p>
+    </div>
+ 
+    <div class="profile-grid">
+      <!-- cartes injectées par JS -->
+    </div>
+ 
+    <button class="profile-play-btn" id="btnPlay" disabled>
+      Jouer →
+    </button>
+  </div>
+ 
+  <!-- ══════════════════════════════
+       JEU (caché au départ)
+       ══════════════════════════════ -->
   <div id="game">
-
-    <!-- ── HUD : jauges de stats ───────────────────────────────────────── -->
-    <div id="hud">
+ 
+    <!-- HUD ICON STATS -->
+  <div id="hud">
 
       <div class="stat" id="curiosityStat">
         <div class="indicator"></div>
@@ -67,27 +155,26 @@
       </div>
 
     </div>
-
-    <!-- ── Carte ──────────────────────────────────────────────────────── -->
+ 
+    <!-- CARD -->
     <div id="cardContainer">
       <div id="card">
-
-        <div id="cardTitle"></div>
         <div id="cardTop"></div>
-        <div id="cardTags"></div>
         <div id="cardImage"></div>
         <div id="cardSource"></div>
-
         <div id="cardPreviewLeft"></div>
         <div id="cardPreviewRight"></div>
-
       </div>
     </div>
-
+ 
   </div>
-
-  <!-- Un seul point d'entrée — game.js importe engine.js lui-même -->
+ 
+  <!-- scripts -->
+  <script src="/js/intro.js"></script>
+  <script type="module" src="/js/cards.js"></script>
+  <script type="module" src="/js/engine.js"></script>
   <script type="module" src="/js/game.js"></script>
+ 
 
 </body>
 
